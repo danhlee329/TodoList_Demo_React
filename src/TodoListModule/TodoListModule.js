@@ -1,6 +1,6 @@
 import React from 'react';
-import './TodoListModule.css';
-import '../css/Test.css';
+//import './TodoListModule.css';
+//import '../css/Test.css';
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from './_constants' 
 
 //Todo Item Class
@@ -205,9 +205,11 @@ class RenderTodoItems extends React.Component {
                       onCompleteStatusChange={this.handleStatusChange} />
     );
 
-    return <ul>
-             {itemList}
-           </ul>
+    const _style = {
+      display: "table"
+    }
+
+    return <div style={_style}> {itemList} </div>
   }
 }
 
@@ -219,6 +221,11 @@ input of type checkbox to be controlled. Input elements should not
 switch from uncontrolled to controlled (or vice versa). Decide between 
 using a controlled or uncontrolled input element for the lifetime of the 
 component. More info: 
+
+NOTE: This was caused by modifying the checked attribute of the checkbox
+      (to understand the difference between uncontrolled and controlled,
+      please consult the React site), so instead of modifying the attribute, 
+      lets use an icon to display whether the item is selected or not
     */
 class RenderTodoItem extends React.Component {
   constructor(props){
@@ -241,13 +248,36 @@ class RenderTodoItem extends React.Component {
   }
 
   render() {
-    return <li>
-              <input type="checkbox" 
-                     checked={this.props.isComplete}
-                     onChange={this.handleClick} /> 
-              {this.props.name}
-            </li>
+    const _style_row = {
+      display: "table-row"
+    }
+    const _style_col = {
+      display: "table-cell"
+    }
+    return (<div style={_style_row}>
+              <div style={_style_col}>
+                <CheckIcon handleClick={this.handleClick}
+                          isComplete={this.props.isComplete} /> 
+              </div>
+              <div style={_style_col}>
+                {this.props.name}
+              </div>
+           </div>)
   }
+}
+//Used to indicate whether an item is completed or not
+const CheckIcon = props => {
+  const _className = props.isComplete ? "fa fa-check-square fa-1x" : "fa fa-square-o fa-1x";
+  const _style = {
+                    cursor: 'pointer'
+                  };
+
+  return (
+      <i className={_className}
+          style={_style}
+          aria-hidden="true"
+          onClick={props.handleClick}></i>
+  );
 }
 
 //Rendered footer
