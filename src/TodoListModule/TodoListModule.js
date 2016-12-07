@@ -169,7 +169,7 @@ class TodoListModule extends React.Component {
     });
 
     return (
-        <div>
+        <div className="TodoModule_list">
           <h1>{this.props.listName}</h1>
           <ItemEnterField onItemAdd={this.addNewTask} />
           <RenderTodoItems itemList={displayItems}
