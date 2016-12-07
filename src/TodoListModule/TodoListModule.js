@@ -1,5 +1,6 @@
 import React from 'react';
 import './TodoListModule.css';
+import '../css/Test.css';
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from './_constants' 
 
 //Todo Item Class
@@ -7,10 +8,12 @@ class TodoItem {
   id: number;
   name: string;
   isComplete: bool;
+  createdDate: date;
 
   constructor(itemID: number, itemName: string){
     this.id = itemID;
     this.name = itemName;
+    this.createdDate = new Date();
   }
 }
 
@@ -72,15 +75,34 @@ class TodoListModule extends React.Component {
   addNewTask(newItemName){
     let curID = this.state.recordID;
     let curList = this.state.itemList;
+    let duplicates = false;
+    let curTaskName = "";
+    let newTaskName_treated = newItemName.toString().trim().toUpperCase();
 
-    curID++;
+    //Check to see if there are duplicates
+    curList.forEach((item) => {
+      curTaskName = item.name.toString().trim().toUpperCase();
+      
+      if(newTaskName_treated === curTaskName){
+        console.log(curTaskName);
+        duplicates = true;
+        return;
+      }
 
-    curList.push(new TodoItem(curID, newItemName));
+    });
 
-    this.setState({
-      recordID: curID,
-      itemList: curList
-    });    
+    if(duplicates){
+      console.log("There is already an item named '" + newTaskName_treated + "'");
+    } else {
+      curID++;
+
+      curList.push(new TodoItem(curID, newItemName));
+
+      this.setState({
+        recordID: curID,
+        itemList: curList
+      });    
+    }
   }
   //Changes view of list (all, active, completed)
   changeViewMode(viewType){
@@ -148,6 +170,7 @@ class TodoListModule extends React.Component {
 
     return (
         <div>
+          <h1>{this.props.listName}</h1>
           <ItemEnterField onItemAdd={this.addNewTask} />
           <RenderTodoItems itemList={displayItems}
                            onCompleteStatusChange={this.setCompletedStatus} />
