@@ -25,7 +25,10 @@ const App = props => (
       <img src={logo} className="App-logo" alt="logo" />
       <h2>React TodoList Demo</h2>
     </div>
-    <TodoListModule></TodoListModule>
+    <div className="App-Content">
+      <TodoListModule listName="Kitchen"></TodoListModule>
+      <TodoListModule listName="Bathroom (Mezzanine)"></TodoListModule>
+    </div>
   </div>
 );
 
