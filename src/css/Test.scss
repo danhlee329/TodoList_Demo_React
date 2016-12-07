@@ -9,3 +9,15 @@ $base-radius: 10px;
 
 .box { @include border-radius($base-radius); }
 .box2 { @include border-radius($base-radius * 2); }
+
+.TodoModule_Content{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+.TodoModule_list {
+  border: 1px solid black;
+  @extend .box;
+  width: 400px;
+}
