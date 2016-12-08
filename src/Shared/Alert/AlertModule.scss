@@ -1,0 +1,19 @@
+@mixin alertModule_base($color) {
+    border: 1px solid #BFBFBF;    
+    background-color : $color;
+    text-align: left;
+
+    :first-child {
+        font-weight: bold;
+        background-color: darken($color, 10%);
+    }
+}
+.alertModule_info {
+    @include alertModule_base(#42b9f4);
+}
+.alertModule_warning {
+    @include alertModule_base(#f4cb42);
+}
+.alertModule_error {
+    @include alertModule_base(#f45942);
+}
