@@ -49,7 +49,9 @@ gulp.task("sass", function () {
     //   .pipe(gulp.dest(paths.webroot + 'css'));
 
     return gulp.src([
-            paths.scss, fontAwesome.scssPath + "/**/*.scss" 
+            paths.scss, 
+            fontAwesome.scssPath + "/**/*.scss",
+            paths.webroot + "Shared/Alert/AlertModule.scss"
         ])
       .pipe(sass()) 
       .pipe(concat(paths.concatCssDest))
