@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './css/Test.css';
+import './css/Test.css';
 import TodoListModule from './TodoListModule/TodoListModule';
+import { AlertModule_Info, AlertModule_Warning, AlertModule_Error } from './Shared/Alert/AlertModule';
 
 // class App extends Component {
 //   render() {
@@ -27,6 +29,11 @@ const App = props => (
       <h2>React TodoList Demo</h2>
     </div>
     <div className="App-Content">
+
+      <AlertModule_Info subject="Test Info" msg="Test Message" />
+      <AlertModule_Warning subject="Test Info" msg="Test Message" />
+      <AlertModule_Error subject="Test Info" msg="Test Message" />
+
       <div className="TodoModule_Content">
         <TodoListModule listName="Kitchen"></TodoListModule>
         <TodoListModule listName="Bathroom (Mezzanine)"></TodoListModule>

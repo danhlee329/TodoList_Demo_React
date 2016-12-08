@@ -6,8 +6,10 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 
 var gulp = require("gulp"),
     rimraf = require("rimraf"),
-    sass = require("gulp-sass");//,
-    //project = require("./project.json");
+    sass = require("gulp-sass"),
+    concat = require("gulp-concat"),
+    sourcemaps = require("gulp-sourcemaps"),
+    fontAwesome = require("node-font-awesome");
 
 var paths = {
     webroot: "./src/"
@@ -15,16 +17,45 @@ var paths = {
 
 //paths.js = paths.webroot + "js/**/*.js";
 //paths.minJs = paths.webroot + "js/**/*.min.js";
-paths.css = paths.webroot + "css/**/*.css";
-paths.scss = paths.webroot + "css/**/*.scss";
-paths.minCss = paths.webroot + "css/**/*.min.css";
+paths.cssDir = paths.webroot + "css/";
+paths.cssFiles = paths.cssDir + "**/*.css";
+paths.scss = paths.cssDir + "**/*.scss";
+//paths.minCss = paths.webroot + "css/**/*.min.css";
+
+paths.concatCssDest = paths.webroot + "css/Test.css";
+var finalCSSFile = "Test.css";
+
+paths.fontsDir = paths.webroot + "fonts/";
 //paths.concatJsDest = paths.webroot + "js/site.min.js";
 //paths.concatCssDest = paths.webroot + "css/site.min.css";
 
+gulp.task("setup", 
+          [
+            "fonts", 
+            "sass"
+          ]);
+
+gulp.task('fonts', function() {
+  gulp.src(fontAwesome.fonts)
+    .pipe(gulp.dest(paths.fontsDir));
+});
+
 gulp.task("sass", function () {
-    return gulp.src(paths.scss)
-      .pipe(sass())
-      .pipe(gulp.dest(paths.webroot + 'css'));
+    // return gulp.src(paths.scss)
+    //   .pipe(sass({
+    //       includePaths: [fontAwesome.scssPath]
+    //   }))
+    //   //.pipe(sourcemaps.write('./'))
+    //   .pipe(gulp.dest(paths.webroot + 'css'));
+
+    return gulp.src([
+            paths.scss, 
+            fontAwesome.scssPath + "/**/*.scss",
+            paths.webroot + "Shared/Alert/AlertModule.scss"
+        ])
+      .pipe(sass()) 
+      .pipe(concat(paths.concatCssDest))
+      .pipe(gulp.dest('.'));       
 });
 
 //gulp.task("clean:js", function (cb) {
